@@ -1,0 +1,11 @@
+﻿@page
+@model WebApplication4.Pages.helloModel
+@{
+    ViewData["Title"] = "hello";
+}
+
+<h2>hello</h2>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
