@@ -6,11 +6,47 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApplication4.Data;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System.Net;
 
 namespace WebApplication4.Controllers
 {
+    [ApiExceptionFilter]
+    public class BaseController : Controller {
+        public string MyMessage { get { return "Hello"; } }
+    }
+
+    public class ApiExceptionFilter : ExceptionFilterAttribute
+    {
+        public override void OnException(ExceptionContext context)
+        {
+
+        }
+    }
+
+
+    public class LoggingAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuted(ActionExecutedContext httpContext)
+        {
+            //Logger.Log();
+        }
+    }
+
+    public class ValidateModelAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext actionContext)
+        {
+            var modelState = actionContext.ModelState;
+            if (!modelState.IsValid)
+            {
+                //actionContext.Response = actionContext.Request.CreateErrorResponse(HttpStatusCode.BadRequest, modelState);
+            }
+        }
+    }
+
     [Route("[controller]/[action]")]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
@@ -29,5 +65,11 @@ namespace WebApplication4.Controllers
             _logger.LogInformation("User logged out.");
             return RedirectToPage("/Index");
         }
+
+        public string StoreData() {
+            throw new Exception("Test exception");
+            return "storedata";
+        }
+
     }
 }
