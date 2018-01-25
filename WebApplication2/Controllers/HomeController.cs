@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Filters;
 
 namespace WebApplication2.Controllers
 {
@@ -64,9 +65,42 @@ namespace WebApplication2.Controllers
 
     //public class TestDbContext : DbContext
 
+    public class TokenAuthenticationFilter : ActionFilterAttribute, IAuthenticationFilter
+    {
+        public void OnAuthentication(AuthenticationContext filterContext)
+        {
+            string token = Convert.ToString(filterContext.RouteData.Values["token"]);
+            // do your authentication stuff            
+        }
+
+        public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    [TokenAuthenticationFilter]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly IProductRepository _productRepository;
+
+        public HomeController()
+        {
+            
+        }
+
+        public HomeController(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
+
+        public ActionResult Download (string filename)
+        {
+            return View();
+        }        
+
+
+            public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
 
@@ -96,5 +130,14 @@ namespace WebApplication2.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult CaptureUserData(string IdentityNo, string FullName,
+    string Dob, string Gender, string PhoneNo, string PhoneNo1, string Email, string Category, string Password)
+        {
+
+            return Json(new { IdentityNo = IdentityNo });
+        }
+
     }
 }

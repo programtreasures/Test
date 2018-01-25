@@ -22,6 +22,26 @@
         <div class="col-md-4">
             <h2>Get more libraries</h2>
             <p>
+
+                <div class="row product cpu">
+                    <div class="col-md-3">
+                        <img class="center-block" src="Content/images/processor.jpg" />
+                        <span class="price"><%= cpu.Price %></span>
+                        <span class="addtocart" id="buttonContainer" runat="server">
+                            <% Button b = new Button();
+                                b.ID = "Button" + cpu.ID;
+                                b.CommandArgument = cpu.ID.ToString();
+                                b.Text = "Add to Cart";
+                                b.OnClientClick = "Addtocart_Click";
+                                buttonContainer.Controls.Add(b);
+                            %>
+                        </span>
+                        <br />
+                    </div>
+                </div>
+
+
+                <asp:TextBox runat="server" type="date" />
                 NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
             </p>
             <p>
@@ -38,5 +58,6 @@
             </p>
         </div>
     </div>
+    <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
 
 </asp:Content>

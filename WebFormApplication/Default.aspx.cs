@@ -13,5 +13,11 @@ namespace WebFormApplication
         {
 
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            ConsoleApp1.Class1 c = new ConsoleApp1.Class1();
+            c.GetData();
+        }
     }
 }

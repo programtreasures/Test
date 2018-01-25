@@ -15,10 +15,17 @@ namespace WebApplication2
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+               name: "TokenApi",
+               routeTemplate: "api/{token}/{controller}/{id}",
+               defaults: new { id = RouteParameter.Optional }
+           );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
         }
     }
 }

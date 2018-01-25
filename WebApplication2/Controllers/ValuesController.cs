@@ -3,12 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
 namespace WebApplication2.Controllers
 {
+    public class TokenAuthenticator : Attribute, IAuthenticationFilter
+    {
+        public bool AllowMultiple => throw new NotImplementedException();
+
+        public Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
+        {
+            var routeData = context.Request.GetRouteData();
+
+            throw new NotImplementedException();
+        }
+
+        public Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class LoggingAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuted(HttpActionExecutedContext httpContext)
@@ -25,10 +44,10 @@ namespace WebApplication2.Controllers
         }
     }
 
+
+    [TokenAuthenticator]
     public class ValuesController : ApiController
-    {
-        [LoggingAttribute]
-        [ValidateModelAttribute]        
+    {     
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

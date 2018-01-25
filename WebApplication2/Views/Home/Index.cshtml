@@ -22,3 +22,32 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
     </div>
 </div>
+
+<input class="btn btn-success" type="submit" value="Submit" onclick="GetData();" />  
+@Html.ActionLink("download","download",new { fileName = Url.Encode("test&.txt") })
+@Html.ActionLink("download2", "download", new { fileName = "test&.txt" })
+<a href="@Url.Encode("/Home/download?fileName=test&.txt")">content</a>
+<script>
+    function GetData() {
+        $.ajax({
+        url: '@Url.Action("CaptureUserData","Home")',
+        data: JSON.stringify({
+            IdentityNo: "1", FullName: "test", Gender: "m", PhoneNo: "000",
+            PhoneNo1: "000",
+            Email: "ooo", Category: "000", Password: "000"
+        }),
+        method: 'post',
+        dataType: 'json',
+        async: false,
+        contentType: 'application/json;charset=utf-8',
+        success: function (response) {
+            alert('Success');
+        },
+        error: function (xhr, status, error) {
+            alert(xhr.status);
+        }
+    });
+}
+</script>
+
+

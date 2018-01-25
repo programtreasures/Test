@@ -7,12 +7,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication4.Data
 {
+    public class Department
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+    }
+
+    public class Employee
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public int DepartmentId { get; set; }
+
+        public Department Department { get; set; }
+
+    }
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
+
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
